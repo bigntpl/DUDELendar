@@ -13,7 +13,9 @@ export const mapEventCalendar = (eventCalendar: IEventCalendar) => ({
 });
 
 export const mapArrayEventCalendar = (listEventsCalendar: IEventCalendar[]) => {
-  const listEventsCalendarFormated = listEventsCalendar.map((eventCalendar) => mapEventCalendar(eventCalendar));
-
-  return listEventsCalendarFormated;
+  if(listEventsCalendar !== undefined){
+    // const listEventsCalendarFormated = listEventsCalendar.map((eventCalendar) => mapEventCalendar(eventCalendar));
+    const listEventsCalendarFormated = listEventsCalendar[0];
+    return listEventsCalendarFormated;
+  }
 };

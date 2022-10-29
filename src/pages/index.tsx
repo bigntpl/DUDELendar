@@ -13,7 +13,10 @@ interface IHomeProps {
 
 const Home = ({ listAllEventsCalendar }: IHomeProps) => {
   const [listEventsCalendar, setListEventsCalendar] = useState<any[]>(listAllEventsCalendar);
-  
+  const eventsCalendar = getAllEventsCalendar();
+  console.log("eventsCalendar", eventsCalendar);
+  console.log("listAllEventsCalendar: ", listEventsCalendar);
+
   return (
     <>
       <Head>

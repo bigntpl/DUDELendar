@@ -131,7 +131,7 @@ export const ModalInfosEventCalendar = ({
   return (
     <Modal open={open} onClose={handleClose}>
       <BoxContainer>
-        <TextField label={'Adicionar título'} value={title} onChange={(e) => setTitle(e.target.value)} fullWidth />
+        <TextField label={'Event Title'} value={title} onChange={(e) => setTitle(e.target.value)} fullWidth />
 
         <SelectColors>
           {ListColorsCard.map((color, index) => (
@@ -156,12 +156,12 @@ export const ModalInfosEventCalendar = ({
           onClick={isEditCard ? handleUpdatedEvent : handleAddedEvent}
           sx={{ marginTop: '0.5rem' }}
         >
-          {isEditCard ? 'Atualizar evento' : 'Adicionar evento'}
+          {isEditCard ? 'Update Event' : 'Add Event'}
         </Button>
 
         {isEditCard && (
           <Button variant="contained" fullWidth sx={{ marginTop: '0.5rem' }} onClick={handleDeleteEvent}>
-            Excluir evento
+            Delete Event
           </Button>
         )}
       </BoxContainer>
