@@ -7,6 +7,7 @@ _cacache
 _logs
 .pnp.js
 .env
+.vscode
 
 # testing
 /coverage
