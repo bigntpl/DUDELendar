@@ -7,10 +7,16 @@ import "../styles/globals.css";
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
-        <Navbar />
-        <CssBaseline />
-        <GlobalStyle />
-        <Component {...pageProps} />
+        <div className="flex">
+          <div className="flex">
+          <Navbar/>
+          </div>
+        <div className="flex-grow">
+          <CssBaseline />
+          <GlobalStyle />
+          <Component {...pageProps} />
+        </div>
+        </div>
     </>
   )
 }
