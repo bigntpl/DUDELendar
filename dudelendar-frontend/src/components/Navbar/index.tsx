@@ -1,8 +1,9 @@
-import { useRouter } from 'next/router'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 import { AiFillHome } from 'react-icons/ai';
 import { BsFillCalendarFill } from 'react-icons/bs';
 import { BiLogIn } from 'react-icons/bi';
+
 export default function Navbar() {
   const router = useRouter()
   return (
