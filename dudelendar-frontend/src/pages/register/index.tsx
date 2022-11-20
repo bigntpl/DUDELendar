@@ -10,7 +10,7 @@ export default function register() {
           <Image className="w-8 h-8 mr-2" src="/dudelendar.png" alt="logo" width={60} height={60}/>
           &nbsp; DUDELendar   
       </a>
-      <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800">
+      <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 className="flex justify-center text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
                   Create your account

@@ -7,7 +7,7 @@ export const BoxContainer = styled(Box)`
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #ffffff;
-  max-width: 400px;
+  max-width: 535px;
   width: 100%;
   border-radius: 5px;
   box-shadow: 24;
