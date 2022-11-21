@@ -78,7 +78,7 @@ export const CalendarScheduler = ({ eventsCalendar }: CalendarSchedulerProps) =>
           right: 'dayGridMonth,timeGridWeek,timeGridDay',
         }}
         locale="en"
-        timeZone='local'
+        timeZone='utc'
         titleFormat={{ year: 'numeric', month: 'short', day: 'numeric' }}
         // googleCalendarApiKey="AIzaSyDRJn-F9sU7yKqeool89eXoQuz9svEwZaE"
         // eventSources={[

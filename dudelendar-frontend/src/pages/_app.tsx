@@ -4,20 +4,25 @@ import { GlobalStyle } from '../styles/global'
 import Navbar from '../components/Navbar'
 import '../styles/globals.css'
 import React from 'react'
+import { SessionProvider } from "next-auth/react"
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component,
+  pageProps: { session, ...pageProps },
+}: AppProps) {
   return (
     <>
-      <div className="flex">
+      <SessionProvider session={session}>
         <div className="flex">
-          <Navbar />
+          <div className="flex">
+            <Navbar />
+          </div>
+          <div className="flex-grow">
+            <CssBaseline />
+            <GlobalStyle />
+            <Component {...pageProps} />
+          </div>
         </div>
-        <div className="flex-grow">
-          <CssBaseline />
-          <GlobalStyle />
-          <Component {...pageProps} />
-        </div>
-      </div>
+      </SessionProvider>
     </>
   )
 }
