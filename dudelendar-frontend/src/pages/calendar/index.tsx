@@ -15,7 +15,7 @@ const Home = ({ listAllEventsCalendar }: IHomeProps) => {
   const [listEventsCalendar, setListEventsCalendar] = useState<any[]>(listAllEventsCalendar)
   const eventsCalendar = getAllEventsCalendar()
   console.log('eventsCalendar', eventsCalendar)
-  console.log('listAllEventsCalendar: ', listEventsCalendar)
+  console.log('listEventsCalendar: ', listEventsCalendar)
 
   return (
     <>
@@ -33,14 +33,16 @@ const Home = ({ listAllEventsCalendar }: IHomeProps) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const eventsCalendar = await getAllEventsCalendar()
+  const eventsCalendar = await getAllEventsCalendar();
+  console.log("log from server", eventsCalendar)
   const listAllEventsCalendar = mapArrayEventCalendar(eventsCalendar)
+  console.log("listAllEventsCalendar: ",listAllEventsCalendar)
 
   return {
     props: {
       listAllEventsCalendar: listAllEventsCalendar ?? [],
     },
-  }
-}
+  };
+};
 
 export default Home

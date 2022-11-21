@@ -59,6 +59,7 @@ export const CalendarScheduler = ({ eventsCalendar }: CalendarSchedulerProps) =>
     }
   }
 
+  console.log("eventsCalendar: ",eventsCalendar)
   return (
     <ContainerCalendar>
       <ModalInfosEventCalendar
@@ -67,7 +68,7 @@ export const CalendarScheduler = ({ eventsCalendar }: CalendarSchedulerProps) =>
         eventInfos={eventInfos}
         isEditCard={isEditCard}
       />
-
+      {/* <div>{eventsCalendar !== undefined ? eventsCalendar: "wrong"}</div> */}
       <FullCalendar
         plugins={[timeGridPlugin, dayGridPlugin, interactionPlugin, googleCalendarPlugin]}
         initialView="timeGridWeek"
@@ -77,18 +78,19 @@ export const CalendarScheduler = ({ eventsCalendar }: CalendarSchedulerProps) =>
           right: 'dayGridMonth,timeGridWeek,timeGridDay',
         }}
         locale="en"
+        timeZone='local'
         titleFormat={{ year: 'numeric', month: 'short', day: 'numeric' }}
-        googleCalendarApiKey="AIzaSyDRJn-F9sU7yKqeool89eXoQuz9svEwZaE"
-        eventSources={[
-          {
-            googleCalendarId: 'classroom104878545612951217677@group.calendar.google.com',
-            className: 'nattapon',
-          },
-          {
-            googleCalendarId: 'th.th#holiday@group.v.calendar.google.com',
-            className: 'วันหยุดในไทย',
-          },
-        ]}
+        // googleCalendarApiKey="AIzaSyDRJn-F9sU7yKqeool89eXoQuz9svEwZaE"
+        // eventSources={[
+        //   {
+        //     googleCalendarId: 'classroom104878545612951217677@group.calendar.google.com',
+        //     className: 'nattapon',
+        //   },
+        //   {
+        //     googleCalendarId: 'th.th#holiday@group.v.calendar.google.com',
+        //     className: 'วันหยุดในไทย',
+        //   },
+        // ]}
         weekends={weekends.weekendsVisible}
         select={handleAddEventSelectAndOpenModal}
         eventClick={handleEditEventSelectAndOpenModal}

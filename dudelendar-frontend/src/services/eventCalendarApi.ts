@@ -28,8 +28,8 @@ export const createEventCalendar = async (data: ICreateEventCalendar) => {
 export const getAllEventsCalendar = async () => {
   try {
     const response = await api.get(GET_ALL_EVENTS_CALENDAR)
-    console.log('response', response)
-    return response.data
+    console.log('response', response.data.data)
+    return response.data.data
   } catch (err) {
     return err
   }
