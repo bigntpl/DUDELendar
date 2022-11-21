@@ -2,16 +2,16 @@ import { Button, Modal, TextField } from '@mui/material'
 import { CalendarApi } from '@fullcalendar/react'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import { ColorsCard, ListColorsCard } from '../../constants/ListColorsCard'
+import { ColorsCard } from '../../constants/ListColorsCard'
 import { createEventCalendar, deleteEventCalendar, updateEventCalendar } from '../../services/eventCalendarApi'
-import { BackgroundColorRounded, BoxContainer, SelectColors } from './styles'
+import { BoxContainer } from './styles'
 
 import * as React from 'react'
 import dayjs, { Dayjs } from 'dayjs'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
-import RichTextEditor from '../RichText';
+import RichTextEditor from '../RichText'
 
 interface ICardColor {
   backgroundColor: string
@@ -50,12 +50,12 @@ export const ModalInfosEventCalendar = ({
     }
   }, [eventInfos, isEditCard])
 
-  const handleSelectCardColor = (color: ColorsCard) => {
-    setCardColor({
-      backgroundColor: color.backgroundColor,
-      textColor: color.textColor,
-    })
-  }
+  // const handleSelectCardColor = (color: ColorsCard) => {
+  //   setCardColor({
+  //     backgroundColor: color.backgroundColor,
+  //     textColor: color.textColor,
+  //   })
+  // }
 
   const handleAddedEvent = async () => {
     try {
@@ -180,7 +180,7 @@ export const ModalInfosEventCalendar = ({
           variant="outlined"
           fullWidth
           onClick={isEditCard ? handleUpdatedEvent : handleAddedEvent}
-          sx={{ marginTop: '0.5rem'}}
+          sx={{ marginTop: '0.5rem' }}
         >
           {isEditCard ? 'Update Event' : 'Add Event'}
         </Button>

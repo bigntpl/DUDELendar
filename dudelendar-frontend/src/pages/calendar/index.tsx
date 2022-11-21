@@ -1,21 +1,21 @@
-import { Typography } from "@mui/material";
-import type { GetServerSideProps, NextPage } from "next";
-import Head from "next/head";
-import { useState } from "react";
-import { CalendarScheduler } from "../../components/CalendarScheduler";
-import { mapArrayEventCalendar } from "../../domain/EventCalendar";
-import { getAllEventsCalendar } from "../../services/eventCalendarApi";
-import { ContainerMain } from "../../styles/Home";
+import React from 'react'
+import type { GetServerSideProps, NextPage } from 'next'
+import Head from 'next/head'
+import { useState } from 'react'
+import { CalendarScheduler } from '../../components/CalendarScheduler'
+import { mapArrayEventCalendar } from '../../domain/EventCalendar'
+import { getAllEventsCalendar } from '../../services/eventCalendarApi'
+import { ContainerMain } from '../../styles/Home'
 
 interface IHomeProps {
-  listAllEventsCalendar: any;
+  listAllEventsCalendar: any
 }
 
 const Home = ({ listAllEventsCalendar }: IHomeProps) => {
-  const [listEventsCalendar, setListEventsCalendar] = useState<any[]>(listAllEventsCalendar);
-  const eventsCalendar = getAllEventsCalendar();
-  console.log("eventsCalendar", eventsCalendar);
-  console.log("listAllEventsCalendar: ", listEventsCalendar);
+  const [listEventsCalendar, setListEventsCalendar] = useState<any[]>(listAllEventsCalendar)
+  const eventsCalendar = getAllEventsCalendar()
+  console.log('eventsCalendar', eventsCalendar)
+  console.log('listAllEventsCalendar: ', listEventsCalendar)
 
   return (
     <>
@@ -29,18 +29,18 @@ const Home = ({ listAllEventsCalendar }: IHomeProps) => {
         <CalendarScheduler eventsCalendar={listEventsCalendar} />
       </ContainerMain>
     </>
-  );
-};
+  )
+}
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const eventsCalendar = await getAllEventsCalendar();
+  const eventsCalendar = await getAllEventsCalendar()
   const listAllEventsCalendar = mapArrayEventCalendar(eventsCalendar)
 
   return {
     props: {
       listAllEventsCalendar: listAllEventsCalendar ?? [],
     },
-  };
-};
+  }
+}
 
-export default Home;
+export default Home

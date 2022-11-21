@@ -1,4 +1,4 @@
-import { styled } from '@mui/material/styles';
+import { styled } from '@mui/material/styles'
 
 export const ContainerCalendar = styled('div')`
   @media (max-width: 768px) {
@@ -7,4 +7,4 @@ export const ContainerCalendar = styled('div')`
       flex-direction: column;
     }
   }
-`;
+`

@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import React from 'react'
 import { useRouter } from 'next/router'
 import { AiFillHome } from 'react-icons/ai'
 import { BsFillCalendarFill } from 'react-icons/bs'
