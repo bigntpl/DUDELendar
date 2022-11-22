@@ -50,6 +50,7 @@ export const CalendarScheduler = ({ eventsCalendar }: CalendarSchedulerProps) =>
           end: changeInfo.event.endStr,
           backgroundColor: changeInfo.event.backgroundColor,
           textColor: changeInfo.event.textColor,
+          detail: changeInfo.event.detail,
         },
       }
 
@@ -59,7 +60,6 @@ export const CalendarScheduler = ({ eventsCalendar }: CalendarSchedulerProps) =>
     }
   }
 
-  console.log("eventsCalendar: ",eventsCalendar)
   return (
     <ContainerCalendar>
       <ModalInfosEventCalendar
@@ -68,7 +68,6 @@ export const CalendarScheduler = ({ eventsCalendar }: CalendarSchedulerProps) =>
         eventInfos={eventInfos}
         isEditCard={isEditCard}
       />
-      {/* <div>{eventsCalendar !== undefined ? eventsCalendar: "wrong"}</div> */}
       <FullCalendar
         plugins={[timeGridPlugin, dayGridPlugin, interactionPlugin, googleCalendarPlugin]}
         initialView="timeGridWeek"
@@ -78,19 +77,8 @@ export const CalendarScheduler = ({ eventsCalendar }: CalendarSchedulerProps) =>
           right: 'dayGridMonth,timeGridWeek,timeGridDay',
         }}
         locale="en"
-        timeZone='utc'
+        timeZone="UTC"
         titleFormat={{ year: 'numeric', month: 'short', day: 'numeric' }}
-        // googleCalendarApiKey="AIzaSyDRJn-F9sU7yKqeool89eXoQuz9svEwZaE"
-        // eventSources={[
-        //   {
-        //     googleCalendarId: 'classroom104878545612951217677@group.calendar.google.com',
-        //     className: 'nattapon',
-        //   },
-        //   {
-        //     googleCalendarId: 'th.th#holiday@group.v.calendar.google.com',
-        //     className: 'วันหยุดในไทย',
-        //   },
-        // ]}
         weekends={weekends.weekendsVisible}
         select={handleAddEventSelectAndOpenModal}
         eventClick={handleEditEventSelectAndOpenModal}
@@ -102,7 +90,7 @@ export const CalendarScheduler = ({ eventsCalendar }: CalendarSchedulerProps) =>
         selectable={true}
         dayMaxEvents={true}
         allDaySlot={false}
-        editable={true}
+        editable={false}
         height="700px"
         buttonText={{
           today: 'Today',

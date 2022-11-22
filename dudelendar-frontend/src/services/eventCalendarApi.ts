@@ -7,13 +7,11 @@ import {
 } from './eventCalendarRoutes'
 
 interface ICreateEventCalendar {
-  eventCalendar: {
-    title: string
-    end: string
-    start: string
-    backgroundColor: string
-    textColor: string
-  }
+  name: string
+  detail: string
+  start: string
+  end: string
+  userid: number
 }
 
 export const createEventCalendar = async (data: ICreateEventCalendar) => {
