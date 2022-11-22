@@ -2,7 +2,6 @@ import { Button, Modal, TextField } from '@mui/material'
 import { CalendarApi } from '@fullcalendar/react'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import { ColorsCard } from '../../constants/ListColorsCard'
 import { createEventCalendar, deleteEventCalendar, updateEventCalendar } from '../../services/eventCalendarApi'
 import { BoxContainer } from './styles'
 
@@ -11,7 +10,6 @@ import dayjs, { Dayjs } from 'dayjs'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
-import RichTextEditor from '../RichText'
 
 interface ICardColor {
   backgroundColor: string
@@ -36,6 +34,9 @@ export const ModalInfosEventCalendar = ({
     backgroundColor: '#039be5',
     textColor: '#ffffff',
   })
+  const [value, setValue] = React.useState<Dayjs | null>(dayjs())
+  const [value2, setValue2] = React.useState<Dayjs | null>(dayjs())
+  const [text, setText] = useState<string>('')
 
   useEffect(() => {
     if (isEditCard) {
@@ -44,6 +45,17 @@ export const ModalInfosEventCalendar = ({
         backgroundColor: eventInfos?.event?.backgroundColor,
         textColor: eventInfos?.event?.textColor,
       })
+      let startT = eventInfos.event?.startStr.toString()
+      startT = startT.replace('T', ' ')
+      startT = startT.replace('Z', '')
+
+      let endT = eventInfos.event?.endStr.toString()
+      endT = endT.replace('T', ' ')
+      endT = endT.replace('Z', '')
+
+      setText(eventInfos?.event?.extendedProps.detail)
+      setValue(dayjs(startT))
+      setValue2(dayjs(endT))
     } else {
       setTitle('')
       setCardColor({ backgroundColor: '#039be5', textColor: '#ffffff' })
@@ -60,24 +72,20 @@ export const ModalInfosEventCalendar = ({
   const handleAddedEvent = async () => {
     try {
       const calendarApi: CalendarApi = eventInfos.view.calendar
-
       const eventCalendar = await createEventCalendar({
-        eventCalendar: {
-          title: title === '' ? 'Sem título' : title,
-          start: eventInfos.startStr,
-          end: eventInfos.endStr,
-          backgroundColor: cardColor.backgroundColor,
-          textColor: cardColor.textColor,
-        },
+        name: title === '' ? 'untitled' : title,
+        detail: text,
+        start: value ? value.format('YYYY-MM-DD HH:mm:ss') : '',
+        end: value2 ? value2.format('YYYY-MM-DD HH:mm:ss') : '',
+        userid: 10,
       })
 
       calendarApi.addEvent({
-        id: eventCalendar._id,
-        title: eventCalendar.title,
+        name: eventCalendar.name,
+        detail: text,
         start: eventCalendar.start,
         end: eventCalendar.endStr,
-        backgroundColor: cardColor.backgroundColor,
-        textColor: cardColor.textColor,
+        userid: 10,
       })
     } catch (err) {
       toast.error('Houve um erro ao criar um evento')
@@ -131,31 +139,23 @@ export const ModalInfosEventCalendar = ({
     }
   }
 
-  const [value, setValue] = React.useState<Dayjs | null>(dayjs())
-  const [value2, setValue2] = React.useState<Dayjs | null>(dayjs())
-
   return (
     <Modal open={open} onClose={handleClose}>
       <BoxContainer>
-        <TextField label={'Add task...'} value={title} onChange={(e) => setTitle(e.target.value)} fullWidth />
-        {/* <SelectColors>
-          {ListColorsCard.map((color, index) => (
-            <BackgroundColorRounded
-              key={index}
-              selected={false}
-              color={color.backgroundColor}
-              onClick={() => handleSelectCardColor(color)}
-            >
-              <input type="radio" name="cardColor" checked={color.backgroundColor === cardColor.backgroundColor} />
-            </BackgroundColorRounded>
-          ))}
-        </SelectColors> */}
+        <TextField
+          label={isEditCard ? '' : 'Add task...'}
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          fullWidth
+          disabled={isEditCard ? true : false}
+        />
         <div className="flex flex-cols items-center">
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DateTimePicker
               renderInput={(props) => <TextField {...props} />}
               label=""
               value={value}
+              disabled={isEditCard ? true : false}
               onChange={(newValue) => {
                 setValue(newValue)
               }}
@@ -167,6 +167,7 @@ export const ModalInfosEventCalendar = ({
               renderInput={(props) => <TextField {...props} />}
               label=""
               value={value2}
+              disabled={isEditCard ? true : false}
               onChange={(newValue) => {
                 setValue2(newValue)
               }}
@@ -174,22 +175,32 @@ export const ModalInfosEventCalendar = ({
           </LocalizationProvider>
         </div>
 
-        <RichTextEditor id="rte"></RichTextEditor>
-
-        <Button
-          variant="outlined"
+        <TextField
+          label={isEditCard ? '' : 'Detail'}
+          value={text}
+          onChange={(e) => setText(e.target.value)}
           fullWidth
-          onClick={isEditCard ? handleUpdatedEvent : handleAddedEvent}
-          sx={{ marginTop: '0.5rem' }}
-        >
-          {isEditCard ? 'Update Event' : 'Add Event'}
-        </Button>
+          disabled={isEditCard ? true : false}
+        />
 
-        {isEditCard && (
+        {isEditCard ? (
+          ''
+        ) : (
+          <Button
+            variant="outlined"
+            fullWidth
+            onClick={isEditCard ? handleUpdatedEvent : handleAddedEvent}
+            sx={{ marginTop: '0.5rem' }}
+          >
+            {isEditCard ? '' : 'Add Event'}
+          </Button>
+        )}
+
+        {/* {isEditCard && (
           <Button variant="outlined" fullWidth sx={{ marginTop: '0.5rem' }} onClick={handleDeleteEvent}>
             Delete Event
           </Button>
-        )}
+        )} */}
       </BoxContainer>
     </Modal>
   )
