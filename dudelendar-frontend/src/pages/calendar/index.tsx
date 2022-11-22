@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import type { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
 import { useState } from 'react'
@@ -6,6 +6,7 @@ import { CalendarScheduler } from '../../components/CalendarScheduler'
 import { mapArrayEventCalendar } from '../../domain/EventCalendar'
 import { getAllEventsCalendar } from '../../services/eventCalendarApi'
 import { ContainerMain } from '../../styles/Home'
+import { useSession } from 'next-auth/react'
 
 interface IHomeProps {
   listAllEventsCalendar: any
@@ -13,9 +14,31 @@ interface IHomeProps {
 
 const Home = ({ listAllEventsCalendar }: IHomeProps) => {
   const [listEventsCalendar, setListEventsCalendar] = useState<any[]>(listAllEventsCalendar)
-  const eventsCalendar = getAllEventsCalendar()
-  console.log('eventsCalendar', eventsCalendar)
-  console.log('listEventsCalendar: ', listEventsCalendar)
+  // const eventsCalendar = getAllEventsCalendar()
+  // console.log('eventsCalendar', eventsCalendar)
+  // const a = listEventsCalendar
+
+  // var b:any[]
+  // console.log('listEventsCalendar: ', listEventsCalendar)
+  // const { data:session} = useSession()
+  // a.forEach((event, index) => {
+  //   if (session && session.user?.userid != event.user) {
+  //     b.push(event)
+  //   }
+  // })
+  // console.log('listEventsCalendar after', b)
+
+  // useEffect(()=>{
+  //   // const a = listEventsCalendar;
+  //   // console.log('listEventsCalendar: ', listEventsCalendar)
+  //   // const { data:session} = useSession();
+  //   // a.forEach((event, index) =>{
+  //   //   if (session && session.user?.userid != event.user) {
+  //   //     listAllEventsCalendar.splice(index, 1)
+  //   //   }
+  //   // })
+  //   setListEventsCalendar(a)
+  // },[JSON.stringify(listEventsCalendar)])
 
   return (
     <>
