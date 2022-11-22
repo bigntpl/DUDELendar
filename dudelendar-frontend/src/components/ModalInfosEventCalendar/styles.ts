@@ -1,5 +1,5 @@
-import Box from '@mui/material/Box';
-import { styled } from '@mui/material/styles';
+import Box from '@mui/material/Box'
+import { styled } from '@mui/material/styles'
 
 export const BoxContainer = styled(Box)`
   position: absolute;
@@ -7,7 +7,7 @@ export const BoxContainer = styled(Box)`
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #ffffff;
-  max-width: 400px;
+  max-width: 535px;
   width: 100%;
   border-radius: 5px;
   box-shadow: 24;
@@ -15,7 +15,7 @@ export const BoxContainer = styled(Box)`
   &:focus {
     outline: none;
   }
-`;
+`
 
 export const SelectColors = styled('div')`
   display: grid;
@@ -23,12 +23,12 @@ export const SelectColors = styled('div')`
   justify-content: center;
   place-items: center;
   padding-top: 10px;
-`;
+`
 
 type BackgroundColorRoundedProps = {
-  color: string;
-  selected: boolean;
-};
+  color: string
+  selected: boolean
+}
 
 export const BackgroundColorRounded = styled('div')<BackgroundColorRoundedProps>`
   width: 20px;
@@ -50,4 +50,4 @@ export const BackgroundColorRounded = styled('div')<BackgroundColorRoundedProps>
     outline: 1px solid #000;
     cursor: pointer;
   }
-`;
+`

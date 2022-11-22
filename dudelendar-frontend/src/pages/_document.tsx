@@ -1,19 +1,19 @@
-import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document';
-import { ServerStyleSheet } from 'styled-components';
-import { ServerStyleSheets } from '@material-ui/styles';
+import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document'
+import { ServerStyleSheet } from 'styled-components'
+import { ServerStyleSheets } from '@material-ui/styles'
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext): Promise<any> {
-    const sheet = new ServerStyleSheet();
-    const materialSheets = new ServerStyleSheets();
-    const originalRenderPage = ctx.renderPage;
+    const sheet = new ServerStyleSheet()
+    const materialSheets = new ServerStyleSheets()
+    const originalRenderPage = ctx.renderPage
 
     try {
       ctx.renderPage = () =>
         originalRenderPage({
           enhanceApp: (App) => (props) => sheet.collectStyles(materialSheets.collect(<App {...props} />)),
-        });
-      const initialProps = await Document.getInitialProps(ctx);
+        })
+      const initialProps = await Document.getInitialProps(ctx)
 
       return {
         ...initialProps,
@@ -25,9 +25,9 @@ class MyDocument extends Document {
             {materialSheets.getStyleElement()}
           </>
         ),
-      };
+      }
     } finally {
-      sheet.seal();
+      sheet.seal()
     }
   }
 
@@ -45,8 +45,8 @@ class MyDocument extends Document {
           <NextScript />
         </body>
       </Html>
-    );
+    )
   }
 }
 
-export default MyDocument;
+export default MyDocument

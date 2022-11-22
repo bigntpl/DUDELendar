@@ -1,25 +1,26 @@
-import { Button, Modal, TextField } from '@mui/material';
-import { CalendarApi } from '@fullcalendar/react';
-import { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
-import { ColorsCard, ListColorsCard } from '../../constants/ListColorsCard';
-import {
-  createEventCalendar,
-  deleteEventCalendar,
-  updateEventCalendar,
-} from '../../services/eventCalendarApi';
-import { BackgroundColorRounded, BoxContainer, SelectColors } from './styles';
+import { Button, Modal, TextField } from '@mui/material'
+import { CalendarApi } from '@fullcalendar/react'
+import { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
+import { createEventCalendar, deleteEventCalendar, updateEventCalendar } from '../../services/eventCalendarApi'
+import { BoxContainer } from './styles'
+
+import * as React from 'react'
+import dayjs, { Dayjs } from 'dayjs'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
 
 interface ICardColor {
-  backgroundColor: string;
-  textColor: string;
+  backgroundColor: string
+  textColor: string
 }
 
 interface IModalInfosEventCalendaryProps {
-  open: boolean;
-  handleClose: () => void;
-  eventInfos: any;
-  isEditCard: boolean;
+  open: boolean
+  handleClose: () => void
+  eventInfos: any
+  isEditCard: boolean
 }
 
 export const ModalInfosEventCalendar = ({
@@ -28,77 +29,87 @@ export const ModalInfosEventCalendar = ({
   eventInfos,
   isEditCard,
 }: IModalInfosEventCalendaryProps) => {
-  const [title, setTitle] = useState<string>('');
+  const [title, setTitle] = useState<string>('')
   const [cardColor, setCardColor] = useState<ICardColor>({
     backgroundColor: '#039be5',
     textColor: '#ffffff',
-  });
+  })
+  const [value, setValue] = React.useState<Dayjs | null>(dayjs())
+  const [value2, setValue2] = React.useState<Dayjs | null>(dayjs())
+  const [text, setText] = useState<string>('')
 
   useEffect(() => {
     if (isEditCard) {
-      setTitle(eventInfos?.event?.title);
+      setTitle(eventInfos?.event?.title)
       setCardColor({
         backgroundColor: eventInfos?.event?.backgroundColor,
         textColor: eventInfos?.event?.textColor,
-      });
-    } else {
-      setTitle('');
-      setCardColor({backgroundColor: '#039be5', textColor: '#ffffff'});
-    }
-  }, [eventInfos, isEditCard]);
+      })
+      let startT = eventInfos.event?.startStr.toString()
+      startT = startT.replace('T', ' ')
+      startT = startT.replace('Z', '')
 
-  const handleSelectCardColor = (color: ColorsCard) => {
-    setCardColor({
-      backgroundColor: color.backgroundColor,
-      textColor: color.textColor,
-    });
-  };
+      let endT = eventInfos.event?.endStr.toString()
+      endT = endT.replace('T', ' ')
+      endT = endT.replace('Z', '')
+
+      setText(eventInfos?.event?.extendedProps.detail)
+      setValue(dayjs(startT))
+      setValue2(dayjs(endT))
+    } else {
+      setTitle('')
+      setCardColor({ backgroundColor: '#039be5', textColor: '#ffffff' })
+    }
+  }, [eventInfos, isEditCard])
+
+  // const handleSelectCardColor = (color: ColorsCard) => {
+  //   setCardColor({
+  //     backgroundColor: color.backgroundColor,
+  //     textColor: color.textColor,
+  //   })
+  // }
 
   const handleAddedEvent = async () => {
     try {
-      const calendarApi: CalendarApi = eventInfos.view.calendar;
-
+      const calendarApi: CalendarApi = eventInfos.view.calendar
       const eventCalendar = await createEventCalendar({
-        eventCalendar: {
-          title: title === '' ? 'Sem título' : title,
-          start: eventInfos.startStr,
-          end: eventInfos.endStr,
-          backgroundColor: cardColor.backgroundColor,
-          textColor: cardColor.textColor,
-        },
-      });
+        name: title === '' ? 'untitled' : title,
+        detail: text,
+        start: value ? value.format('YYYY-MM-DD HH:mm:ss') : '',
+        end: value2 ? value2.format('YYYY-MM-DD HH:mm:ss') : '',
+        userid: 10,
+      })
 
       calendarApi.addEvent({
-        id: eventCalendar._id,
-        title: eventCalendar.title,
+        name: eventCalendar.name,
+        detail: text,
         start: eventCalendar.start,
         end: eventCalendar.endStr,
-        backgroundColor: cardColor.backgroundColor,
-        textColor: cardColor.textColor,
-      });
+        userid: 10,
+      })
     } catch (err) {
-      toast.error('Houve um erro ao criar um evento');
+      toast.error('Houve um erro ao criar um evento')
     } finally {
-      setTitle('');
-      handleClose();
+      setTitle('')
+      handleClose()
     }
-  };
+  }
 
   const handleDeleteEvent = async () => {
     try {
-      await deleteEventCalendar({ id: eventInfos.event.id });
-      eventInfos.event.remove();
+      await deleteEventCalendar({ id: eventInfos.event.id })
+      eventInfos.event.remove()
     } catch (error) {
-      toast.error('Houve um erro ao deletar o evento');
+      toast.error('Houve um erro ao deletar o evento')
     } finally {
-      setTitle('');
-      handleClose();
+      setTitle('')
+      handleClose()
     }
-  };
+  }
 
   const handleUpdatedEvent = async () => {
     try {
-      const calendarApi: CalendarApi = eventInfos.view.calendar;
+      const calendarApi: CalendarApi = eventInfos.view.calendar
 
       const eventCalendarUpdated = {
         eventCalendar: {
@@ -109,62 +120,88 @@ export const ModalInfosEventCalendar = ({
           backgroundColor: cardColor.backgroundColor,
           textColor: cardColor.textColor,
         },
-      };
-
-      const currentEvent = calendarApi.getEventById(eventInfos.event.id);
-
-      if (currentEvent) {
-        currentEvent.setProp('title', title !== '' ? title : 'Sem título');
-        currentEvent.setProp('backgroundColor', cardColor.backgroundColor);
-        currentEvent.setProp('textColor', cardColor.textColor);
       }
 
-      await updateEventCalendar(eventCalendarUpdated);
+      const currentEvent = calendarApi.getEventById(eventInfos.event.id)
+
+      if (currentEvent) {
+        currentEvent.setProp('title', title !== '' ? title : 'Sem título')
+        currentEvent.setProp('backgroundColor', cardColor.backgroundColor)
+        currentEvent.setProp('textColor', cardColor.textColor)
+      }
+
+      await updateEventCalendar(eventCalendarUpdated)
     } catch (error) {
-      toast.error('Houve um erro ao atualizar o evento');
+      toast.error('Houve um erro ao atualizar o evento')
     } finally {
-      setTitle('');
-      handleClose();
+      setTitle('')
+      handleClose()
     }
-  };
+  }
 
   return (
     <Modal open={open} onClose={handleClose}>
       <BoxContainer>
-        <TextField label={'Event Title'} value={title} onChange={(e) => setTitle(e.target.value)} fullWidth />
-
-        <SelectColors>
-          {ListColorsCard.map((color, index) => (
-            <BackgroundColorRounded
-              key={index}
-              selected={false}
-              color={color.backgroundColor}
-              onClick={() => handleSelectCardColor(color)}
-            >
-              <input
-                type="radio"
-                name="cardColor"
-                checked={color.backgroundColor === cardColor.backgroundColor}
-              />
-            </BackgroundColorRounded>
-          ))}
-        </SelectColors>
-
-        <Button
-          variant="contained"
+        <TextField
+          label={isEditCard ? '' : 'Add task...'}
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
           fullWidth
-          onClick={isEditCard ? handleUpdatedEvent : handleAddedEvent}
-          sx={{ marginTop: '0.5rem' }}
-        >
-          {isEditCard ? 'Update Event' : 'Add Event'}
-        </Button>
+          disabled={isEditCard ? true : false}
+        />
+        <div className="flex flex-cols items-center">
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DateTimePicker
+              renderInput={(props) => <TextField {...props} />}
+              label=""
+              value={value}
+              disabled={isEditCard ? true : false}
+              onChange={(newValue) => {
+                setValue(newValue)
+              }}
+            />
+          </LocalizationProvider>
+          <div className="p-5">to</div>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DateTimePicker
+              renderInput={(props) => <TextField {...props} />}
+              label=""
+              value={value2}
+              disabled={isEditCard ? true : false}
+              onChange={(newValue) => {
+                setValue2(newValue)
+              }}
+            />
+          </LocalizationProvider>
+        </div>
 
-        {isEditCard && (
-          <Button variant="contained" fullWidth sx={{ marginTop: '0.5rem' }} onClick={handleDeleteEvent}>
-            Delete Event
+        <TextField
+          label={isEditCard ? '' : 'Detail'}
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          fullWidth
+          disabled={isEditCard ? true : false}
+        />
+
+        {isEditCard ? (
+          ''
+        ) : (
+          <Button
+            variant="outlined"
+            fullWidth
+            onClick={isEditCard ? handleUpdatedEvent : handleAddedEvent}
+            sx={{ marginTop: '0.5rem' }}
+          >
+            {isEditCard ? '' : 'Add Event'}
           </Button>
         )}
+
+        {/* {isEditCard && (
+          <Button variant="outlined" fullWidth sx={{ marginTop: '0.5rem' }} onClick={handleDeleteEvent}>
+            Delete Event
+          </Button>
+        )} */}
       </BoxContainer>
     </Modal>
-  );
-};
+  )
+}
