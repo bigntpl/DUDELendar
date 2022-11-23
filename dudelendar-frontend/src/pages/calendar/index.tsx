@@ -1,18 +1,18 @@
-import React, { useEffect } from 'react'
-import type { GetServerSideProps, NextPage } from 'next'
+import React from 'react'
+import type { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { useState } from 'react'
 import { CalendarScheduler } from '../../components/CalendarScheduler'
 import { mapArrayEventCalendar } from '../../domain/EventCalendar'
 import { getAllEventsCalendar } from '../../services/eventCalendarApi'
 import { ContainerMain } from '../../styles/Home'
-import { useSession } from 'next-auth/react'
 
 interface IHomeProps {
   listAllEventsCalendar: any
 }
 
 const Home = ({ listAllEventsCalendar }: IHomeProps) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [listEventsCalendar, setListEventsCalendar] = useState<any[]>(listAllEventsCalendar)
   // const eventsCalendar = getAllEventsCalendar()
   // console.log('eventsCalendar', eventsCalendar)
@@ -56,16 +56,16 @@ const Home = ({ listAllEventsCalendar }: IHomeProps) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const eventsCalendar = await getAllEventsCalendar();
-  console.log("log from server", eventsCalendar)
+  const eventsCalendar = await getAllEventsCalendar()
+  // console.log("log from server", eventsCalendar)
   const listAllEventsCalendar = mapArrayEventCalendar(eventsCalendar)
-  console.log("listAllEventsCalendar: ",listAllEventsCalendar)
+  // console.log("listAllEventsCalendar: ",listAllEventsCalendar)
 
   return {
     props: {
       listAllEventsCalendar: listAllEventsCalendar ?? [],
     },
-  };
-};
+  }
+}
 
 export default Home

@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { signIn, getCsrfToken } from 'next-auth/react'
 import { Formik, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
@@ -8,7 +7,7 @@ import React from 'react'
 
 export default function SignIn({ csrfToken }: any) {
   const router = useRouter()
-  const [error, setError] = useState(null)
+  // const [error, setError] = useState(null)
 
   return (
     <section className="bg-gray-50">
@@ -96,7 +95,7 @@ export default function SignIn({ csrfToken }: any) {
                     {formik.isSubmitting ? 'Please wait...' : 'Sign In'}
                   </button>
                   <p className="text-sm font-light text-gray-500">
-                    Don't have an account?{' '}
+                    Don&apos;t have an account?{' '}
                     <a onClick={() => router.push(`/register`)} className="font-medium text-dudepink hover:underline">
                       Register here
                     </a>

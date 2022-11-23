@@ -1,6 +1,7 @@
 import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document'
 import { ServerStyleSheet } from 'styled-components'
 import { ServerStyleSheets } from '@material-ui/styles'
+import React from 'react'
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext): Promise<any> {
@@ -9,6 +10,7 @@ class MyDocument extends Document {
     const originalRenderPage = ctx.renderPage
 
     try {
+      // eslint-disable-next-line no-param-reassign
       ctx.renderPage = () =>
         originalRenderPage({
           enhanceApp: (App) => (props) => sheet.collectStyles(materialSheets.collect(<App {...props} />)),

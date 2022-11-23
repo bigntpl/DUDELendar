@@ -5,7 +5,7 @@ import { AiFillHome } from 'react-icons/ai'
 import { BsFillCalendarFill } from 'react-icons/bs'
 import { BiLogIn } from 'react-icons/bi'
 import { BiLogOut } from 'react-icons/bi'
-import { useSession, signOut } from 'next-auth/react';
+import { useSession, signOut } from 'next-auth/react'
 
 export default function Navbar() {
   const router = useRouter()
@@ -41,7 +41,9 @@ export default function Navbar() {
 
           <div
             className="p-3 hover:text-black hover:bg-white text-white text-center cursor-pointer"
-            onClick={() => {session? router.push(`/calendar`) : router.push(`/login`)}}
+            onClick={() => {
+              session ? router.push(`/calendar`) : router.push(`/login`)
+            }}
           >
             {' '}
             <div className="flex flex-row items-center gap-5 ml-12">
@@ -54,37 +56,41 @@ export default function Navbar() {
               Calendar
             </div>{' '}
           </div>
-          {session ? <div
-            className="p-3 hover:text-black hover:bg-white text-white text-center cursor-pointer"
-            onClick={() => signOut()}
-          >
-            {' '}
-            <div className="flex flex-row items-center gap-5 ml-11">
-              <BiLogOut
-                style={{
-                  height: '20px',
-                  width: '20px',
-                }}
-              />
-              {session.user != undefined ? session.user.username : ""}
+          {session ? (
+            <div
+              className="p-3 hover:text-black hover:bg-white text-white text-center cursor-pointer"
+              onClick={() => signOut()}
+            >
+              {' '}
+              <div className="flex flex-row items-center gap-5 ml-11">
+                <BiLogOut
+                  style={{
+                    height: '20px',
+                    width: '20px',
+                  }}
+                />
+                {/* {session.username && session.user.name && session.user.name.username ? session.user.name['username'] : ''} */}
+              </div>
+              {''}
             </div>
-            {''}
-          </div> : <div
-            className="p-3 hover:text-black hover:bg-white text-white text-center cursor-pointer"
-            onClick={() => router.push(`/login`)}
-          >
-            {' '}
-            <div className="flex flex-row items-center gap-5 ml-11">
-              <BiLogIn
-                style={{
-                  height: '20px',
-                  width: '20px',
-                }}
-              />
-              Login
+          ) : (
+            <div
+              className="p-3 hover:text-black hover:bg-white text-white text-center cursor-pointer"
+              onClick={() => router.push(`/login`)}
+            >
+              {' '}
+              <div className="flex flex-row items-center gap-5 ml-11">
+                <BiLogIn
+                  style={{
+                    height: '20px',
+                    width: '20px',
+                  }}
+                />
+                Login
+              </div>
+              {''}
             </div>
-            {''}
-          </div>}
+          )}
         </div>
       </div>
     </nav>

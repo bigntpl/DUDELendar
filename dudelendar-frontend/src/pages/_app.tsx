@@ -4,11 +4,9 @@ import { GlobalStyle } from '../styles/global'
 import Navbar from '../components/Navbar'
 import '../styles/globals.css'
 import React from 'react'
-import { SessionProvider } from "next-auth/react"
+import { SessionProvider } from 'next-auth/react'
 
-function MyApp({ Component,
-  pageProps: { session, ...pageProps },
-}: AppProps) {
+function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
     <>
       <SessionProvider session={session}>
