@@ -47,7 +47,7 @@ export const getAllEventsCalendar = async () => {
   try {
     const response = await api.get(GET_ALL_EVENTS_CALENDAR)
     console.log('all responses', response.data.data)
-    console.log("all responses typeof: ",typeof(response.data.data))
+    console.log('all responses typeof: ', typeof response.data.data)
     return response.data.data
   } catch (err) {
     return err

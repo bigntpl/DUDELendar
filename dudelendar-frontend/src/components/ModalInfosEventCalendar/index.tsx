@@ -10,6 +10,7 @@ import dayjs, { Dayjs } from 'dayjs'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
+import { useSession } from 'next-auth/react'
 
 interface ICardColor {
   backgroundColor: string
@@ -38,6 +39,7 @@ export const ModalInfosEventCalendar = ({
   const [value, setValue] = React.useState<Dayjs | null>(dayjs())
   const [value2, setValue2] = React.useState<Dayjs | null>(dayjs())
   const [text, setText] = useState<string>('')
+  const { data: session } = useSession()
 
   useEffect(() => {
     if (isEditCard) {
@@ -71,6 +73,7 @@ export const ModalInfosEventCalendar = ({
   // }
 
   const handleAddedEvent = async () => {
+    if (!session) return
     try {
       const calendarApi: CalendarApi = eventInfos.view.calendar
       const eventCalendar = await createEventCalendar({
@@ -78,7 +81,7 @@ export const ModalInfosEventCalendar = ({
         detail: text,
         start: value ? value.format('YYYY-MM-DD HH:mm:ss') : '',
         end: value2 ? value2.format('YYYY-MM-DD HH:mm:ss') : '',
-        userid: 10,
+        userid: session.userid,
       })
 
       calendarApi.addEvent({
@@ -86,7 +89,7 @@ export const ModalInfosEventCalendar = ({
         detail: text,
         start: eventCalendar.start,
         end: eventCalendar.endStr,
-        userid: 10,
+        userid: session.userid,
       })
     } catch (err) {
       toast.error('Houve um erro ao criar um evento')
