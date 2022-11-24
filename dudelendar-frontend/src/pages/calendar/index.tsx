@@ -4,8 +4,9 @@ import Head from 'next/head'
 import { useState } from 'react'
 import { CalendarScheduler } from '../../components/CalendarScheduler'
 import { mapArrayEventCalendar } from '../../domain/EventCalendar'
-import { getAllEventsCalendar } from '../../services/eventCalendarApi'
+import { getAllEventsCalendar, getAllEventsCalendarById } from '../../services/eventCalendarApi'
 import { ContainerMain } from '../../styles/Home'
+import { getSession, useSession } from 'next-auth/react'
 
 interface IHomeProps {
   listAllEventsCalendar: any
@@ -19,8 +20,19 @@ const Home = ({ listAllEventsCalendar }: IHomeProps) => {
   // const a = listEventsCalendar
 
   // var b:any[]
-  // console.log('listEventsCalendar: ', listEventsCalendar)
-  // const { data:session} = useSession()
+  console.log('listEventsCalendar: ', listEventsCalendar)
+  const { data: session } = useSession()
+
+  console.log('session from event', session?.userid)
+  console.log('listEventsCalendar', listEventsCalendar)
+
+  const eventById = getAllEventsCalendarById(session != undefined ? session.userid : 0)
+  console.log('test', eventById)
+  // const newEvents = mapArrayEventCalendar(test)
+
+  // console.log("log from server", eventsCalendar)
+  // if (test !== undefined) {
+  // }
   // a.forEach((event, index) => {
   //   if (session && session.user?.userid != event.user) {
   //     b.push(event)
@@ -56,6 +68,8 @@ const Home = ({ listAllEventsCalendar }: IHomeProps) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
+  // const session = await getSession()
+  // console.log('session from server', session != null ? session : 'nothing')
   const eventsCalendar = await getAllEventsCalendar()
   // console.log("log from server", eventsCalendar)
   const listAllEventsCalendar = mapArrayEventCalendar(eventsCalendar)

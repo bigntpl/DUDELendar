@@ -4,6 +4,7 @@ import {
   DELETE_EVENT_CALENDAR,
   GET_ALL_EVENTS_CALENDAR,
   UPDATE_EVENT_CALENDAR,
+  GET_ALL_EVENTS_CALENDAR_BY_ID,
 } from './eventCalendarRoutes'
 
 interface ICreateEventCalendar {
@@ -23,10 +24,20 @@ export const createEventCalendar = async (data: ICreateEventCalendar) => {
   }
 }
 
+export const getAllEventsCalendarById = async (userid: number) => {
+  try {
+    const response = await api.post(GET_ALL_EVENTS_CALENDAR_BY_ID, userid)
+    // console.log('response', response.data.data)
+    return response.data.data
+  } catch (err) {
+    return err
+  }
+}
+
 export const getAllEventsCalendar = async () => {
   try {
     const response = await api.get(GET_ALL_EVENTS_CALENDAR)
-    console.log('response', response.data.data)
+    // console.log('response', response.data.data)
     return response.data.data
   } catch (err) {
     return err

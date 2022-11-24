@@ -14,10 +14,10 @@ export const mapEventCalendar = (eventCalendar: IEventCalendar) => ({
 
 export const mapArrayEventCalendar = (listEventsCalendar: IEventCalendar[]) => {
   if (listEventsCalendar !== null) {
-    // const listEventsCalendarFormated = listEventsCalendar.map((eventCalendar) => mapEventCalendar(eventCalendar));
+    // const listEventsCalendarFormated = listEventsCalendar.map((eventCalendar) => mapEventCalendar(eventCalendar))
     // console.log("listcalendar: ", listEventsCalendar[0].id)
     // console.log("listEventsCalendarFormated: ", listEventsCalendarFormated)
-    // return listEventsCalendarFormated;
+    // return listEventsCalendarFormated
     return listEventsCalendar
   }
   // console.log("null")

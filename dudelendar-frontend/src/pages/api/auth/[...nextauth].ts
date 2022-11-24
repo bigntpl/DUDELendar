@@ -33,12 +33,12 @@ export const authOptions = {
         })
         // const user = { id: "1", name: "J Smith", email: "jsmith@example.com" }
         const data = await res.json()
-        console.log('data: ', data)
+        // console.log('data: ', data)
         if (data.message == 'Login Sucessfully') {
           // if (data.status == "ok") {
           // Any object returned will be saved in `user` property of the JWT
-          console.log('Login success')
-          console.log('user data: ', data)
+          // console.log('Login success')
+          // console.log('user data: ', data)
           // console.log("data user: ", data.user)
           // return data.user
           return data
@@ -61,24 +61,29 @@ export const authOptions = {
     async redirect({ baseUrl }: any) {
       return baseUrl
     },
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async session({ session, token }: any) {
-      session.access_token = token.access_token
-      console.log('session', session)
+      // session.access_token = token.access_token
+      // // console.log('session', session)
+      // // console.log('token', token)
+      session.username = token.name
+      session.userid = token.email
 
-      // console.log('token', token)
-      session.user.name = token.name
       // session.test.address = 'test value'
       // console.log('session.user.name', session.user)
 
-      console.log('token.name', token.name)
-      return token.name
+      // console.log('session', session)
+      return session
     },
     async jwt({ token, user }: any) {
       if (user) {
+        // console.log('token: ', token)
         // console.log('user', user)
         token.access_token = user.token
-        token.name = user
-        console.log('token', token)
+        token.name = user.username
+        token.email = user.userid
+        // token.
+        // console.log('token', token)
       }
       return token
     },
