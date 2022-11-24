@@ -15,6 +15,14 @@ interface ICreateEventCalendar {
   userid: number
 }
 
+interface IUserId {
+  userid: number
+  name?: string
+  detail?: string
+  start?: string
+  end?: string
+}
+
 export const createEventCalendar = async (data: ICreateEventCalendar) => {
   try {
     const response = await api.post(CREATE_EVENT_CALENDAR, data)
@@ -24,10 +32,11 @@ export const createEventCalendar = async (data: ICreateEventCalendar) => {
   }
 }
 
-export const getAllEventsCalendarById = async (userid: number) => {
+export const getAllEventsCalendarById = async (data: IUserId) => {
   try {
-    const response = await api.post(GET_ALL_EVENTS_CALENDAR_BY_ID, userid)
-    // console.log('response', response.data.data)
+    const response = await api.post(GET_ALL_EVENTS_CALENDAR_BY_ID, data)
+    // console.log('response by id', response.data.data)
+    // console.log("response by id typeof ",typeof(response.data.data))
     return response.data.data
   } catch (err) {
     return err
@@ -37,7 +46,8 @@ export const getAllEventsCalendarById = async (userid: number) => {
 export const getAllEventsCalendar = async () => {
   try {
     const response = await api.get(GET_ALL_EVENTS_CALENDAR)
-    // console.log('response', response.data.data)
+    console.log('all responses', response.data.data)
+    console.log("all responses typeof: ",typeof(response.data.data))
     return response.data.data
   } catch (err) {
     return err

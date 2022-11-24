@@ -10,7 +10,7 @@ import { useSession, signOut } from 'next-auth/react'
 export default function Navbar() {
   const router = useRouter()
   const { data: session } = useSession()
-  console.log('session from ui: ', session)
+  // console.log('session from ui: ', session)
   // console.log('before session from ui')
   // session !== undefined ? console.log('session from ui: ', session) : console.log('undefined from ui')
   // console.log('after session from ui')
