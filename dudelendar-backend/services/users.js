@@ -1,7 +1,6 @@
 const db = require("./db");
 const helper = require("../helper");
 const config = require("../config");
-const bodyParser = require("body-parser");
 
 async function getMultiple(page = 1) {
   const offset = helper.getOffset(page, config.listPerPage);
@@ -29,7 +28,23 @@ async function insertUser(user) {
   return { message };
 }
 
+async function checkDuplicatedUsername(username) {
+  const rows = await db.query(
+    `SELECT * from Users Where User_Username='${username}'`
+  );
+  return rows.length > 0;
+}
+
+async function getUser(username) {
+  const rows = await db.query(
+    `SELECT * from Users Where User_Username='${username}'`
+  );
+  return { rows };
+}
+
 module.exports = {
   getMultiple,
   insertUser,
+  checkDuplicatedUsername,
+  getUser,
 };
