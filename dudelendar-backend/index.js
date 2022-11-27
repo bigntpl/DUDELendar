@@ -1,9 +1,15 @@
 const express = require("express");
 const app = express();
 const port = 3000;
-const programmingLanguagesRouter = require("./routes/programmingLanguages");
-const users = require("./routes/users");
+const usersRouter = require("./routes/users");
+const tasksRouter = require("./routes/tasks");
+const cors = require("cors");
 
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 app.use(express.json());
 app.use(
   express.urlencoded({
@@ -13,8 +19,9 @@ app.use(
 app.get("/", (req, res) => {
   res.json({ message: "ok" });
 });
-app.use("/programming-languages", programmingLanguagesRouter);
-app.use("/users", users);
+app.use("/users-info", usersRouter);
+app.use("/tasks-info", tasksRouter);
+
 /* Error handler middleware */
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;

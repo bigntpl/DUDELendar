@@ -83,7 +83,7 @@ export const CalendarScheduler = ({ eventsCalendar }: CalendarSchedulerProps) =>
         select={handleAddEventSelectAndOpenModal}
         eventClick={handleEditEventSelectAndOpenModal}
         eventChange={handleUpdateEventSelect}
-        initialEvents={eventsCalendar}
+        events={eventsCalendar}
         longPressDelay={1000}
         eventLongPressDelay={1000}
         selectLongPressDelay={1000}

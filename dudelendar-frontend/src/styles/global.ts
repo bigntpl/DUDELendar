@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from 'styled-components'
 
 const GlobalStyle = createGlobalStyle`
   *{
@@ -38,6 +38,6 @@ const GlobalStyle = createGlobalStyle`
     border-radius: 20px;       /* roundness of the scroll thumb */
     border: 3px solid #F0F0F0;  /* creates padding around scroll thumb */
   }
-`;
+`
 
-export { GlobalStyle };
+export { GlobalStyle }

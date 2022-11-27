@@ -4,6 +4,7 @@ import {
   DELETE_EVENT_CALENDAR,
   GET_ALL_EVENTS_CALENDAR,
   UPDATE_EVENT_CALENDAR,
+  GET_ALL_EVENTS_CALENDAR_BY_ID,
 } from './eventCalendarRoutes'
 
 interface ICreateEventCalendar {
@@ -12,6 +13,14 @@ interface ICreateEventCalendar {
   start: string
   end: string
   userid: number
+}
+
+interface IUserId {
+  userid: number
+  name?: string
+  detail?: string
+  start?: string
+  end?: string
 }
 
 export const createEventCalendar = async (data: ICreateEventCalendar) => {
@@ -23,10 +32,22 @@ export const createEventCalendar = async (data: ICreateEventCalendar) => {
   }
 }
 
+export const getAllEventsCalendarById = async (data: IUserId) => {
+  try {
+    const response = await api.post(GET_ALL_EVENTS_CALENDAR_BY_ID, data)
+    // console.log('response by id', response.data.data)
+    // console.log("response by id typeof ",typeof(response.data.data))
+    return response.data.data
+  } catch (err) {
+    return err
+  }
+}
+
 export const getAllEventsCalendar = async () => {
   try {
     const response = await api.get(GET_ALL_EVENTS_CALENDAR)
-    console.log('response', response.data.data)
+    console.log('all responses', response.data.data)
+    console.log('all responses typeof: ', typeof response.data.data)
     return response.data.data
   } catch (err) {
     return err

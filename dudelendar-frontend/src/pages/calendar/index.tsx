@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
-import type { GetServerSideProps, NextPage } from 'next'
+import type { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { useState } from 'react'
 import { CalendarScheduler } from '../../components/CalendarScheduler'
 import { mapArrayEventCalendar } from '../../domain/EventCalendar'
-import { getAllEventsCalendar } from '../../services/eventCalendarApi'
+import { getAllEventsCalendar, getAllEventsCalendarById } from '../../services/eventCalendarApi'
 import { ContainerMain } from '../../styles/Home'
 import { useSession } from 'next-auth/react'
 
@@ -13,32 +13,21 @@ interface IHomeProps {
 }
 
 const Home = ({ listAllEventsCalendar }: IHomeProps) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [listEventsCalendar, setListEventsCalendar] = useState<any[]>(listAllEventsCalendar)
-  // const eventsCalendar = getAllEventsCalendar()
-  // console.log('eventsCalendar', eventsCalendar)
-  // const a = listEventsCalendar
+  const { data: session } = useSession()
 
-  // var b:any[]
-  // console.log('listEventsCalendar: ', listEventsCalendar)
-  // const { data:session} = useSession()
-  // a.forEach((event, index) => {
-  //   if (session && session.user?.userid != event.user) {
-  //     b.push(event)
-  //   }
-  // })
-  // console.log('listEventsCalendar after', b)
-
-  // useEffect(()=>{
-  //   // const a = listEventsCalendar;
-  //   // console.log('listEventsCalendar: ', listEventsCalendar)
-  //   // const { data:session} = useSession();
-  //   // a.forEach((event, index) =>{
-  //   //   if (session && session.user?.userid != event.user) {
-  //   //     listAllEventsCalendar.splice(index, 1)
-  //   //   }
-  //   // })
-  //   setListEventsCalendar(a)
-  // },[JSON.stringify(listEventsCalendar)])
+  useEffect(() => {
+    ;(async () => {
+      if (!session) return
+      const jsonData = {
+        userid: session.userid,
+      }
+      const eventById = await getAllEventsCalendarById(jsonData)
+      console.log('eventById', eventById)
+      setListEventsCalendar(eventById)
+    })()
+  }, [session])
 
   return (
     <>
@@ -56,16 +45,18 @@ const Home = ({ listAllEventsCalendar }: IHomeProps) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const eventsCalendar = await getAllEventsCalendar();
-  console.log("log from server", eventsCalendar)
+  // const session = await getSession()
+  // console.log('session from server', session != null ? session : 'nothing')
+  const eventsCalendar = await getAllEventsCalendar()
+  // console.log("log from server", eventsCalendar)
   const listAllEventsCalendar = mapArrayEventCalendar(eventsCalendar)
-  console.log("listAllEventsCalendar: ",listAllEventsCalendar)
+  // console.log("listAllEventsCalendar: ",listAllEventsCalendar)
 
   return {
     props: {
       listAllEventsCalendar: listAllEventsCalendar ?? [],
     },
-  };
-};
+  }
+}
 
 export default Home
