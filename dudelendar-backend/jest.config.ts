@@ -23,7 +23,7 @@ export default {
   rootDir: ".",
 
   // A list of paths to directories that Jest should use to search for files in
-  roots: ["<rootDir>"],
+  roots: ["<rootDir>/"],
 
   testEnvironment: "node",
 
@@ -34,7 +34,7 @@ export default {
     "^.+\\.(ts|tsx)$": "ts-jest",
   },
   // An array of glob patterns indicating a set of files for which coverage information should be collected
-  // collectCoverageFrom: undefined,
+  collectCoverageFrom: ["helper.js"],
 
   // The directory where Jest should output its coverage files
   coverageDirectory: "coverage",
