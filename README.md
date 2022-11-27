@@ -1,4 +1,5 @@
 # 📅 DUDElendar
+#### `manual test cases` and `automated test cases` are in `dudelendar-frontend` folder
 
 ## Motivation
 We would like to create an calendar application that would allows multiple users to have collective events. The application can suggest common avaliable time slots for all member in the team. So the team could set an appointment easily and more effective.
@@ -27,24 +28,25 @@ Backend: http://dudelendar.th1.proen.cloud/
 
 **2-** Install dependecies.
 ```js
+cd dudelendar-backend
+yarn install
+cd dudelendar-frontend
 yarn install
 ```
 
 **3-** Run Development environment.
 ```js
+// in each folder
 yarn run dev
 ```
-**3-** Run unit test (for **backend** only).
+**4-** Run unit test (for **backend** only).
 ```js
+cd dudelendar-backend
 yarn run test
 ```
 
-**5-** Build (for **frontend** only)
-```js
-yarn run build
+**5-** Run UI test (for **frontend** only).
 ```
-
-**6-** Run built application (for **frontend** only)
-```js
-yarn run start
+cd dudelendar-frontend
+yarn playwright test
 ```
