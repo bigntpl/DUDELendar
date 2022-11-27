@@ -1,9 +1,14 @@
 # 📅 DUDElendar
 
+## Motivation
+We would like to create an calendar application that would allows multiple users to have collective events. The application can suggest common avaliable time slots for all member in the team. So the team could set an appointment easily and more effective.
+
 ## Stacks: 
-- Next
-- Mui
+- Next.js
+- MUI
 - Styled Components
+- fullcalendar
+- tailwindcss
 - Node.js
 - PM2
 
@@ -12,7 +17,11 @@
 Frontend: http://dudelendars.th1.proen.cloud/<br />
 Backend: http://dudelendar.th1.proen.cloud/
 
-### Init Project
+## Testing tools:
+- Jest for unit testing
+- Playwright for Automated UI Testing
+
+## Init Project
 
 **1-** Clone repository.
 
