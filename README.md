@@ -2,6 +2,7 @@
 #### `manual test cases` and `automated test cases` are in `dudelendar-frontend` folder
 
 ## Motivation
+Test
 We would like to create an calendar application that would allows multiple users to have collective events. The application can suggest common avaliable time slots for all member in the team. So the team could set an appointment easily and more effective.
 
 ## Stacks: 
